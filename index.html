@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Update page title to reflect the new slogan instead of the old strategy tag -->
+    <title>Post Plus | فايدة بلس .. مزايا بلس</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
+    <!-- GSAP Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+
+    <style>
+        :root {
+            --ep-green: #008542;
+            --ep-green-dark: #006633;
+            --ep-accent: #e6f2ec;
+            --text-dark: #2d3436;
+            --text-light: #636e72;
+            --bg-body: #f5f7fa;
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-dark);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* --- Sidebar Navigation --- */
+        aside {
+            width: 300px;
+            background: var(--white);
+            height: 100vh;
+            position: fixed;
+            right: 0;
+            top: 0;
+            border-left: 1px solid rgba(0,0,0,0.05);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.03);
+        }
+
+        .brand {
+            padding: 30px;
+            /* Removed the green bottom border to eliminate the line under the logo */
+            border-bottom: none;
+        }
+
+        .brand h1 {
+            color: var(--ep-green);
+            font-weight: 900;
+            font-size: 1.8rem;
+            line-height: 1;
+        }
+        
+        .brand span { font-size: 0.9rem; color: #888; font-weight: 400; }
+
+        .nav-scroll {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+
+        .nav-links { list-style: none; }
+
+        .nav-links li a {
+            display: block;
+            padding: 12px 30px;
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            border-right: 4px solid transparent;
+        }
+
+        .nav-links li a:hover, .nav-links li a.active {
+            background: var(--ep-accent);
+            color: var(--ep-green);
+            border-right-color: var(--ep-green);
+            padding-right: 25px; /* Slight movement effect */
+        }
+
+        /* --- Main Content --- */
+        main {
+            width: calc(100% - 300px);
+            margin-right: 300px;
+            padding: 60px 5%;
+        }
+
+        /* --- Section Styling --- */
+        .content-block {
+            background: var(--white);
+            padding: 50px;
+            margin-bottom: 40px;
+            border-radius: 16px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.04);
+            position: relative;
+            overflow: hidden;
+            border-top: 5px solid var(--ep-green);
+        }
+
+        .block-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+
+        .block-num {
+            font-size: 3rem;
+            font-weight: 900;
+            color: rgba(0, 133, 66, 0.1);
+            margin-left: 20px;
+            line-height: 1;
+        }
+
+        .block-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--ep-green);
+        }
+
+        /* --- Typography --- */
+        h3 {
+            font-size: 1.4rem;
+            color: var(--ep-green-dark);
+            margin: 30px 0 15px 0;
+            position: relative;
+            display: inline-block;
+            border-bottom: 2px solid var(--ep-accent);
+            padding-bottom: 5px;
+        }
+        
+        p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            color: #444;
+        }
+
+        ul, ol { margin-right: 25px; margin-bottom: 20px; }
+        li { margin-bottom: 10px; line-height: 1.6; }
+
+        /* --- Tables --- */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin: 25px 0;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.03);
+            border: 1px solid #eee;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            min-width: 1000px; /* Ensure wide tables don't squash */
+        }
+
+        thead { background: var(--ep-green); color: white; }
+        
+        th { padding: 15px; text-align: right; font-weight: 700; white-space: nowrap; font-size: 0.9rem; }
+        td { padding: 15px; border-bottom: 1px solid #f0f0f0; color: #555; vertical-align: top; font-size: 0.95rem; }
+        
+        tr:nth-child(even) { background-color: #fcfcfc; }
+        tr:hover { background-color: #e6f2ec; }
+        
+        /* Removed action button styles as buttons were removed */
+
+        /* --- Interactive Header --- */
+        .interactive-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            /* Remove gap to bring logo and slogan closer together */
+            gap: 0;
+            background: var(--white);
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .interactive-header img {
+            max-width: 324px; /* enlarged by an additional 20% */
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .header-slogan {
+            /* Increase the font size so the slogan stands out */
+            font-size: 2rem;
+            font-weight: 700;
+            /* Apply Pantone 355U green (#009A44) as requested */
+            color: #009A44;
+            text-align: center;
+            /* Place the slogan beneath the logo and reduce the space between them further */
+            margin-top: -40px;
+        }
+
+        /* --- Scroll Progress Bar --- */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: var(--ep-green);
+            width: 0%;
+            z-index: 2000;
+        }
+
+        /* Responsive layout for mobile screens */
+        @media (max-width: 768px) {
+            /* Stack sidebar above main content on small screens */
+            aside {
+                position: static;
+                width: 100%;
+                height: auto;
+                border-left: none;
+                border-top: 1px solid rgba(0,0,0,0.05);
+                box-shadow: none;
+                margin: 0;
+                z-index: initial;
+            }
+
+            main {
+                width: 100%;
+                margin-right: 0;
+                padding: 60px 3%;
+            }
+
+            /* Adjust nav links for mobile: make them wrap and center */
+            .nav-links {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                padding: 0;
+            }
+
+            .nav-links li a {
+                width: auto;
+                flex: 1 1 45%;
+                text-align: center;
+                margin-bottom: 10px;
+                border-right: none;
+                border-bottom: 2px solid transparent;
+            }
+
+            .nav-links li a:hover,
+            .nav-links li a.active {
+                background: var(--ep-accent);
+                color: var(--ep-green);
+                border-bottom-color: var(--ep-green);
+                padding-right: 0;
+            }
+
+            /* Ensure the header (logo + slogan) scales on small screens */
+            .interactive-header {
+                margin-top: 20px;
+                padding: 20px;
+            }
+
+            .interactive-header img {
+                width: 80%;
+                max-width: 300px;
+            }
+
+            .header-slogan {
+                font-size: 1.8rem;
+                /* Place the slogan beneath the logo and reduce the space on small screens even more */
+                margin-top: -25px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="progress-bar"></div>
+
+    <aside>
+        <!-- Removed brand content to avoid repetition; sidebar now only holds navigation -->
+        <div class="brand"></div>
+        <div class="nav-scroll">
+            <ul class="nav-links">
+                <li><a href="#sec-1" class="active">1. هدف الخطة</a></li>
+                <li><a href="#sec-2">2. تعريف الحساب</a></li>
+                <li><a href="#sec-3">3. الشريحة المستهدفة</a></li>
+                <li><a href="#sec-4">4. الميزة التنافسية الرئيسية</a></li>
+                <li><a href="#sec-5">5. الشرائح الأساسية</a></li>
+                <li><a href="#sec-6">6. كيفية المخاطبة</a></li>
+                <li><a href="#sec-7">7. التموضع</a></li>
+                <li><a href="#sec-8">8. الرسالة الرئيسية</a></li>
+                <li><a href="#sec-9">9. أسلوب التواصل</a></li>
+                <li><a href="#sec-10">10. أولويات التنفيذ</a></li>
+                <li><a href="#sec-11">11. مؤشرات النجاح (KPIs)</a></li>
+                <li><a href="#sec-12">12. التعريف بالحساب</a></li>
+                <li><a href="#sec-13">13. أهداف الحساب</a></li>
+                <li><a href="#sec-14">14. مميزات الحساب</a></li>
+                <li><a href="#sec-15">15-18. الخطة التسويقية</a></li>
+                <li><a href="#sec-19">19. الفرص التسويقية</a></li>
+                <li><a href="#sec-20">20. الأهداف التسويقية</a></li>
+                <li><a href="#sec-21">21. الجمهور المستهدف</a></li>
+                <li><a href="#sec-22">22. ربط شخصية العميل برحلة الشراء</a></li>
+                <li><a href="#sec-23">23. السياسة الإعلانية</a></li>
+                <li><a href="#sec-24">24-26. القنوات التسويقية</a></li>
+                <li><a href="#sec-27">27. التركيز الجغرافي</a></li>
+                <li><a href="#sec-28">28. الجدول الزمني</a></li>
+                <li><a href="#sec-29">29. إدارة الحملات</a></li>
+                <li><a href="#sec-30">30. آليات قياس الأداء</a></li>
+                <li><a href="#sec-31">31. توزيع القنوات (مواسم)</a></li>
+                <li><a href="#sec-32">32. خطة Q1 (رمضان)</a></li>
+                <li><a href="#sec-33">33. خطة Q2 (الصيف)</a></li>
+                <li><a href="#sec-34">34. خطة Q3 (المدارس)</a></li>
+                <li><a href="#sec-35">35. خطة Q4 (نهاية العام)</a></li>
+                <li><a href="#sec-36">36. قواعد التشغيل</a></li>
+                <li><a href="#sec-37">37. دليل التشغيل</a></li>
+                <li><a href="#sec-38">38. التقارير والمتابعة</a></li>
+                <li><a href="#sec-39">39. ضوابط التشغيل</a></li>
+                <li><a href="#sec-40">40. الشروط والأحكام</a></li>
+                <li><a href="#sec-41">41. الأسئلة الشائعة</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <main>
+
+
+        <!-- Interactive Header -->
+        <div class="interactive-header">
+            <img src="post_plus_logo.png" alt="شعار Post Plus">
+            <span class="header-slogan">فايدة بلس .. مزايا بلس</span>
+        </div>
+
+        <!-- 1. هدف الخطة -->
+        <div class="content-block" id="sec-1">
+            <div class="block-header">
+                <span class="block-num">01</span>
+                <h2 class="block-title">هدف الخطة</h2>
+            </div>
+            <p>بنقدّم حساب Post Plus بعائد شهري ثابت للناس اللي عندهم سيولة وعايزين يحققوا دخل شهري ثابت بالإضافة لمزايا حقيقية تتخطى فكرة العائد بس.</p>
+        </div>
+
+        <!-- 2. تعريف الحساب -->
+        <div class="content-block" id="sec-2">
+            <div class="block-header">
+                <span class="block-num">02</span>
+                <h2 class="block-title">تعريف الحساب</h2>
+            </div>
+            <p>حساب توفير بعائد شهري موجه لعملاء يمتلكون سيولة نقدية مستقرة، ويبحثون عن:</p>
+            <ul>
+                <li>دخل شهري منتظم</li>
+                <li>مزايا إضافية بجانب العائد (تأمين – مزايا – خصومات)</li>
+                <li>جهة موثوقة للتعامل على الأموال</li>
+            </ul>
+        </div>
+
+        <!-- 3. اختيار الشريحة -->
+        <div class="content-block" id="sec-3">
+            <div class="block-header">
+                <span class="block-num">03</span>
+                <h2 class="block-title">اختيار الشريحة المستهدفة</h2>
+            </div>
+            <p>علشان الحد الأدنى لفتح الحساب عالي، الحساب ده مش مناسب لكل الناس. إحنا بنخاطب اللي يقدروا يحطوا مبلغ كويس ويستفيدوا من المزايا.</p>
+            <ul>
+                <li>القدرة على إيداع مبلغ محترم</li>
+                <li>أسلوب حياة يسمح بالاستفادة من المزايا</li>
+                <li>الرغبة في الحصول على أفضل قيمة مقابل الفلوس</li>
+                <li>بنرحب بعملاء جدد وبنوفّر الترقية لعملائنا الحاليين</li>
+            </ul>
+        </div>
+
+        <!-- 4. الميزة التنافسية الرئيسية -->
+        <div class="content-block" id="sec-4">
+            <div class="block-header">
+                <span class="block-num">04</span>
+            <h2 class="block-title">الميزة التنافسية الرئيسية للحساب</h2>
+            </div>
+            <p>لا يُباع كـ “حساب عائد أعلى” فقط، بل كحزمة متكاملة:</p>
+            <ul>
+                <li>عائد شهري</li>
+                <li>تأمين فعلي مرتبط بالحساب</li>
+                <li>مزايا (Entertainer)</li>
+                <li>أدوات دفع وتقسيط (One Finance)</li>
+                <li>تفعيل نظام win للحساب</li>
+            </ul>
+            <p style="background: var(--ep-accent); padding: 15px; border-radius: 8px; color: var(--ep-green); font-weight: bold; text-align: center;">عائد شهري + تغطية تأمينية + مزايا استخدام</p>
+        </div>
+
+        <!-- 5. الشرائح الأساسية -->
+        <div class="content-block" id="sec-5">
+            <div class="block-header">
+                <span class="block-num">05</span>
+                <h2 class="block-title">شرائح العملاء وطريقة التواصل معاهم</h2>
+            </div>
+            
+            <h3 style="color: #333;">الشريحة 1: الموظفين وأصحاب الدخل الثابت اللي دخلهم عالي نسبيًا</h3>
+            <p><strong>الدافع:</strong> الحصول على دخل شهري ثابت</p>
+            <p><strong>المدخل:</strong> العائد الشهري وسهولة الوصول</p>
+
+            <h3 style="color: #333;">الشريحة 2: الناس اللي بيدوروا على أمان لعيلتهم</h3>
+            <p><strong>الدافع:</strong> حماية العائلة</p>
+            <p><strong>المدخل:</strong> التأمين مع AXA ضمن الحساب مش إضافة</p>
+
+            <h3 style="color: #333;">الشريحة 3: الناس اللي بتدير فلوسها بحكمة وعايزين يستفيدوا من كل جنيه</h3>
+            <p><strong>الدافع:</strong> تحقيق أكبر استفادة من فلوسهم</p>
+            <p><strong>المدخل:</strong> تطبيق Entertainer وبرنامج النقاط وخيارات التقسيط</p>
+        </div>
+
+        <!-- 6. كيفية المخاطبة -->
+        <div class="content-block" id="sec-6">
+            <div class="block-header">
+                <span class="block-num">06</span>
+                <h2 class="block-title">كيفية مخاطبة كل شريحة</h2>
+            </div>
+            <p>لكل شريحة من عملائنا رسالة مختلفة تناسب احتياجاتهم:</p>
+            <ul>
+                <li><strong>الشريحة الأولى:</strong> نبرز لهم العائد الشهري الثابت وسهولة الإيداع والسحب لأن هدفهم هو دخل شهري منتظم.</li>
+                <li><strong>الشريحة الثانية:</strong> نؤكد على حماية العائلة ونوضح أن التأمين متضمن في الحساب، لأنها تبحث عن الأمان.</li>
+                <li><strong>الشريحة الثالثة:</strong> نشرح لهم كيفية الاستفادة من المزايا مثل تطبيق Entertainer ونقاط المكافآت وخيارات التقسيط لتحقيق أقصى استفادة من أموالهم.</li>
+            </ul>
+        </div>
+
+        <!-- 7. التموضع -->
+        <div class="content-block" id="sec-7">
+            <div class="block-header">
+                <span class="block-num">07</span>
+                <h2 class="block-title">التموضع</h2>
+            </div>
+            <p>التموضع: حساب يوفر دخل شهري + أمان + مزايا حقيقية.</p>
+        </div>
+
+        <!-- 8. الرسالة الرئيسية -->
+        <div class="content-block" id="sec-8">
+            <div class="block-header">
+                <span class="block-num">08</span>
+                <h2 class="block-title">الرسالة الرئيسية</h2>
+            </div>
+            <p>“عائد شهري ومزايا إضافية مع حساب Post Plus”</p>
+        </div>
+
+        <!-- 9. أسلوب التواصل -->
+        <div class="content-block" id="sec-9">
+            <div class="block-header">
+                <span class="block-num">09</span>
+                <h2 class="block-title">أسلوب التواصل مع الجمهور</h2>
+            </div>
+            <ul>
+                <li>توعية قبل البيع</li>
+                <li>تبسيط المزايا غير المالية</li>
+                <li>ربط كل ميزة باحتياج واقعي</li>
+            </ul>
+        </div>
+
+        <!-- 10. أولويات التنفيذ -->
+        <div class="content-block" id="sec-10">
+            <div class="block-header">
+                <span class="block-num">10</span>
+                <h2 class="block-title">أولويات التنفيذ</h2>
+            </div>
+            <ol>
+                <li>تثبيت الرسالة والتموضع</li>
+                <li>تدريب الفروع على الحساب</li>
+                <li>مواد تعريفية واضحة لكل ميزة</li>
+                <li>إطلاق تدريجي للحساب</li>
+            </ol>
+        </div>
+
+        <!-- 11. KPIs -->
+        <div class="content-block" id="sec-11">
+            <div class="block-header">
+                <span class="block-num">11</span>
+                <h2 class="block-title">مؤشرات النجاح (KPIs)</h2>
+            </div>
+            <ul>
+                <li>عدد الحسابات الجديدة</li>
+                <li>متوسط الرصيد</li>
+                <li>معدل استخدام المزايا</li>
+                <li>تكلفة الاستحواذ على العميل</li>
+            </ul>
+        </div>
+
+        <h1 style="color:var(--ep-green); text-align:center; margin: 60px 0;">الخطة التسويقية</h1>
+
+        <!-- 12. التعريف بالحساب -->
+        <div class="content-block" id="sec-12">
+            <div class="block-header">
+                <span class="block-num">12</span>
+                <h2 class="block-title">التعريف بحساب Post Plus</h2>
+            </div>
+            <p>حساب توفير بعائد شهري مقدم من البريد المصري، موجه للناس اللي عندهم سيولة نقدية مستقرة وعايزين دخل شهري وأمان ومزايا حقيقية. وده جزء من جهود البريد المصري لدعم الشمول المالي وتطوير خدمات الادخار.</p>
+        </div>
+
+        <!-- 13. أهداف الحساب -->
+        <div class="content-block" id="sec-13">
+            <div class="block-header">
+                <span class="block-num">13</span>
+                <h2 class="block-title">أهداف حساب Post Plus</h2>
+            </div>
+            <ul>
+                <li>جذب عملاء يتمتعون بوعي مالي مرتفع.</li>
+                <li>زيادة متوسط أرصدة الحسابات.</li>
+                <li>تقديم حساب ادخاري يمنح مزايا متنوعة تتجاوز العائد الشهري.</li>
+            </ul>
+        </div>
+
+        <!-- 14. المميزات -->
+        <div class="content-block" id="sec-14">
+            <div class="block-header">
+                <span class="block-num">14</span>
+                <h2 class="block-title">مميزات حساب Post Plus</h2>
+            </div>
+            <ul>
+                <li>عائد شهري.</li>
+                <li>تغطية تأمينية بالتعاون مع AXA.</li>
+                <li>تطبيق Entertainer.</li>
+                <li>نقاط مكافآت WIN.</li>
+                <li>بطاقة تقسيط One Finance.</li>
+                <li>بطاقة خصم مباشر ذهبية.</li>
+            </ul>
+        </div>
+
+        <!-- 15-18. الخطة التسويقية -->
+        <div class="content-block" id="sec-15">
+            <div class="block-header">
+                <span class="block-num">15-18</span>
+                <h2 class="block-title">الخطة التسويقية ومراحل التنفيذ</h2>
+            </div>
+            
+            <h3>16. مراحل تنفيذ الخطة</h3>
+            
+            <p><strong>17. المرحلة الأولى – الإطلاق التجريبي</strong></p>
+            <ul>
+                <li>فروع مختارة.</li>
+                <li>تدريب الموظفين.</li>
+                <li>مواد تعريفية مبسطة.</li>
+            </ul>
+
+            <p><strong>18. المرحلة الثانية – التوسع</strong></p>
+            <ul>
+                <li>تعميم الفروع.</li>
+                <li>دعم رقمي أساسي (محتوى توضيحي + رسائل CRM).</li>
+                <li>توحيد الرسائل.</li>
+            </ul>
+        </div>
+
+        <!-- 19. الفرص التسويقية -->
+        <div class="content-block" id="sec-19">
+            <div class="block-header">
+                <span class="block-num">19</span>
+                <h2 class="block-title">الفرص التسويقية</h2>
+            </div>
+            <ul>
+                <li>شبكة فروع البريد الواسعة.</li>
+                <li>ثقة الجمهور في البريد المصري.</li>
+                <li>عملاء البريد الحاليين ممكن يطوّروا حساباتهم.</li>
+            </ul>
+        </div>
+
+        <!-- 20. الأهداف التسويقية -->
+        <div class="content-block" id="sec-20">
+            <div class="block-header">
+                <span class="block-num">20</span>
+                <h2 class="block-title">الأهداف التسويقية</h2>
+            </div>
+            <ul>
+                <li>زيادة عدد الحسابات المفتوحة.</li>
+                <li>رفع متوسط الرصيد.</li>
+                <li>تعزيز استخدام المزايا.</li>
+            </ul>
+        </div>
+
+        <!-- 21. الجمهور المستهدف -->
+        <div class="content-block" id="sec-21">
+            <div class="block-header">
+                <span class="block-num">21</span>
+                <h2 class="block-title">الجمهور المستهدف</h2>
+            </div>
+            <ul>
+                <li>أصحاب دخول ثابتة.</li>
+                <li>الباحثون عن الأمان العائلي.</li>
+                <li>عملاء ذوو توجه عملي في إدارة أموالهم</li>
+            </ul>
+        </div>
+
+        <!-- 22. Personas Table (FULL DATA) -->
+        <div class="content-block" id="sec-22">
+            <div class="block-header">
+                <span class="block-num">22</span>
+                <h2 class="block-title">ربط البيرسونا برحلة العميل</h2>
+            </div>
+            <p><strong>ربط شخصية العميل برحلة الشراء</strong></p>
+            
+            <h3>أصحاب دخول ثابتة</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>شخصية العميل</th>
+                            <th>مرحلة الرحلة</th>
+                            <th>نقاط الألم</th>
+                            <th>فكرة المحتوى</th>
+                            <th>الصيغة</th>
+                            <th>القناة</th>
+                            <th>الدعوة للإجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>دخل ثابت</td><td>وعي</td><td>أموال غير مستغلة</td><td>عائد شهري مع سهولة الإيداع والسحب حسب الشروط والاحكام</td><td>فيديو قصير</td><td>سوشيال</td><td>اعرف أكتر</td></tr>
+                        <tr><td>دخل ثابت</td><td>اهتمام</td><td>القلق من ربط الفلوس</td><td>مرونة في السحب والإيداع مع عائد</td><td>بوست شرح</td><td>سوشيال</td><td>قارن بنفسك</td></tr>
+                        <tr><td>دخل ثابت</td><td>قرار</td><td>تعقيد الفتح</td><td>فتح الحساب بسهولة</td><td>فيديو خطوات</td><td>فروع/سوشيال</td><td>افتح حساب</td></tr>
+                        <tr><td>دخل ثابت</td><td>استخدام</td><td>عدم متابعة العائد</td><td>تابع عائدك شهريًا</td><td>تذكير</td><td>CRM</td><td>تابع الآن</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>الباحثون عن الأمان العائلي</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>شخصية العميل</th>
+<th>مرحلة الرحلة</th>
+<th>نقاط الألم</th>
+<th>فكرة المحتوى</th>
+<th>الصيغة</th>
+<th>القناة</th>
+<th>الدعوة للإجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>أمان عائلي</td><td>وعي</td><td>الخوف على الأسرة</td><td>حساب ومعاه تأمين</td><td>فيديو بسيط</td><td>سوشيال</td><td>اعرف أكتر</td></tr>
+                        <tr><td>أمان عائلي</td><td>اهتمام</td><td>عدم الثقة</td><td>تأمين AXA ضمن الحساب</td><td>إنفوجراف</td><td>سوشيال</td><td>شوف التفاصيل</td></tr>
+                        <tr><td>أمان عائلي</td><td>قرار</td><td>مقارنة البدائل</td><td>مزايا مقابل التكلفة</td><td>بوست اعتراضات</td><td>فروع/سوشيال</td><td>افتح حساب</td></tr>
+                        <tr><td>أمان عائلي</td><td>استخدام</td><td>إجراءات التأمين</td><td>استخدام سهل للتأمين</td><td>فيديو إرشادي</td><td>CRM</td><td>فعل التأمين</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>عملاء ذوو توجه عملي في إدارة أموالهم</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>شخصية العميل</th>
+<th>مرحلة الرحلة</th>
+<th>نقاط الألم</th>
+<th>فكرة المحتوى</th>
+<th>الصيغة</th>
+<th>القناة</th>
+<th>الدعوة للإجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>قيمة مضافة</td><td>وعي</td><td>مصروفات بلا قيمة مضافة</td><td>فلوسك تحقق لك عائد شهري</td><td>فيديو قصير</td><td>سوشيال</td><td>اعرف أكتر</td></tr>
+                        <tr><td>قيمة مضافة</td><td>اهتمام</td><td>مزايا غير واضحة</td><td>مزايا استخدام فعلية</td><td>تجربة مستخدم</td><td>سوشيال</td><td>جرّب الآن</td></tr>
+                        <tr><td>قيمة مضافة</td><td>قرار</td><td>تأخير الاستفادة</td><td>استفيد من أول شهر</td><td>فيديو تفعيل</td><td>فروع/سوشيال</td><td>افتح حساب</td></tr>
+                        <tr><td>قيمة مضافة</td><td>استخدام</td><td>نسيان المزايا</td><td>كل استخدام له مردود</td><td>نصائح</td><td>CRM</td><td>استعمل المزايا</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 23. السياسة الإعلانية -->
+        <div class="content-block" id="sec-23">
+            <div class="block-header">
+                <span class="block-num">23</span>
+                <h2 class="block-title">خطة الإعلانات وطريقة جذب العملاء</h2>
+            </div>
+            <ul>
+                <li>رسائل نصية SMS</li>
+                <li>مواد مطبوعة داخل الفروع</li>
+                <li>محتوى توعوي رقمي</li>
+                <li>التسويق الرقمي</li>
+                <li>إعلانات خارجية في الشوارع والطرق</li>
+                <li>مترو الأنفاق والأتوبيسات العامة</li>
+                <li>الموقع الإلكتروني وتطبيق البريد</li>
+                <li>رسائل صوتية IVR فترة الانتظار في الكول سنتر</li>
+                <li>شاشات العرض داخل الفروع</li>
+                <li>الإعلانات الرقمية الممولة</li>
+                <li>المؤثرين وصناع المحتوى</li>
+                <li>الفعاليات والمعارض المتخصصة</li>
+                <li>ملصقات سيارات البريد المتنقلة</li>
+            </ul>
+        </div>
+
+        <!-- 24-26. القنوات التسويقية -->
+        <div class="content-block" id="sec-24">
+            <div class="block-header">
+                <span class="block-num">24-26</span>
+                <h2 class="block-title">القنوات التسويقية والمنصات</h2>
+            </div>
+
+            <h3>25. القنوات الرقمية الأساسية</h3>
+            <ul>
+                <li>المحتوى التوعوي + الإعلانات الموجهة Facebook / Instagram</li>
+                <li>شرح المنتج وقصص الاستخدام YouTube / Short Video</li>
+                <li>التقاط الطلب الجاهز Google Search</li>
+                <li>التحفيز وإغلاق القرار CRM (SMS / WhatsApp)</li>
+                <li>صفحات هبوط فرعية على الموقع الإلكتروني: تعريف شامل بالخدمة + الشروط والأحكام + تحويل العميل</li>
+                <li>لإعادة استهداف المهتمين Retargeting</li>
+            </ul>
+
+            <h3>26. القنوات داخل المكاتب</h3>
+            <ul>
+                <li>شاشات العرض</li>
+                <li>مواد مطبوعة</li>
+                <li>تدريب موظفي الشباك</li>
+                <li>تنظيم تجربة العميل داخل المكتب لخدمة المنتج</li>
+            </ul>
+        </div>
+
+        <!-- 27. التركيز الجغرافي -->
+        <div class="content-block" id="sec-27">
+            <div class="block-header">
+                <span class="block-num">27</span>
+                <h2 class="block-title">التركيز على المحافظات</h2>
+            </div>
+            <ul>
+                <li>تكثيف الإعلانات في المحافظات التي حققت أعلى أداء في حساب “سوبر توفير”</li>
+                <li>استخدام الاستهداف الجغرافي في الحملات الرقمية</li>
+                <li>إعادة توزيع الميزانية بناءً على الأداء الجغرافي</li>
+            </ul>
+        </div>
+
+        <!-- 28. الجدول الزمني -->
+        <div class="content-block" id="sec-28">
+            <div class="block-header">
+                <span class="block-num">28</span>
+                <h2 class="block-title">الجدول الزمني العام</h2>
+            </div>
+            <ul>
+                <li>إطلاق تجريبي.</li>
+                <li>تقييم.</li>
+                <li>توسع منظم.</li>
+            </ul>
+        </div>
+
+        <!-- 29. إدارة الحملات -->
+        <div class="content-block" id="sec-29">
+            <div class="block-header">
+                <span class="block-num">29</span>
+                <h2 class="block-title">إدارة الحملات</h2>
+            </div>
+            <ul>
+                <li>تحديد مكان وزمان وجمهور وهدف كل حملة.</li>
+                <li>متابعة الأداء.</li>
+                <li>تعديل الرسائل عند الحاجة.</li>
+            </ul>
+        </div>
+
+        <!-- 30. آليات قياس الأداء -->
+        <div class="content-block" id="sec-30">
+            <div class="block-header">
+                <span class="block-num">30</span>
+                <h2 class="block-title">آليات قياس الأداء</h2>
+            </div>
+            <ul>
+                <li>عدد الحسابات قبل وبعد الحملة.</li>
+                <li>متوسط الأرصدة.</li>
+                <li>معدل استخدام المزايا.</li>
+                <li>رضا العملاء.</li>
+            </ul>
+        </div>
+
+        <!-- 31. توزيع القنوات حسب المواسم -->
+        <div class="content-block" id="sec-31">
+            <div class="block-header">
+                <span class="block-num">31</span>
+                <h2 class="block-title">استخدام القنوات في المواسم المختلفة</h2>
+            </div>
+            
+            <h3>Q1 (فبراير–أبريل) - فبراير – قبل رمضان</h3>
+            <p>التركيز الموسمي: الاستعداد المالي لرمضان</p>
+            <p>الربط بالميزة التنافسية: دخل شهري وسيولة قبل موسم المصاريف</p>
+            <p>القنوات: وسائل التواصل (مرحلة الوعي)، البحث (الطلب الجاهز)، والفروع (التحويل)</p>
+
+            <h3>مارس – رمضان</h3>
+            <p>التركيز الموسمي: إدارة المصروفات + الاستفادة من النقاط</p>
+            <p>الربط بالميزة التنافسية: نقاط WIN وسيولة وعائد شهري</p>
+            <p>القنوات: نستخدم وسائل التواصل + فيديو، ورسائل CRM (تذكير بالنقاط)، والفروع</p>
+
+            <h3>أبريل – ما بعد رمضان</h3>
+            <p>التركيز الموسمي: تعويض المصاريف وبناء رصيد جديد</p>
+            <p>الربط بالميزة التنافسية: زيادة الرصيد تعني زيادة العائد</p>
+            <p>القنوات: نستخدم وسائل التواصل، ونستخدم رسائل CRM، والفروع</p>
+
+            <hr style="border:0; border-top:1px solid #ddd; margin: 20px 0;">
+
+            <h3>Q2 (مايو–يوليو) - مايو – بداية المصيف</h3>
+            <p>التركيز الموسمي: تخطيط السفر والمصروفات</p>
+            <p>الربط بالميزة التنافسية: تطبيق Entertainer مع إدارة السيولة أثناء السفر</p>
+            <p>القنوات: نستخدم وسائل التواصل / فيديو، ونستخدم البحث، ونستخدم رسائل CRM</p>
+
+            <h3>يونيو – ذروة المصيف</h3>
+            <p>التركيز الموسمي: الاستفادة من المزايا اليومية</p>
+            <p>الربط بالميزة التنافسية: خصومات تطبيق Entertainer وبرنامج النقاط</p>
+            <p>القنوات: نستخدم وسائل التواصل / فيديو قصير، ومؤثرين بشكل محدود، والفروع</p>
+
+            <h3>يوليو – نهاية المصيف</h3>
+            <p>التركيز الموسمي: إعادة ترتيب الرصيد بعد السفر</p>
+            <p>الربط بالميزة التنافسية: زيادة الرصيد تعني زيادة العائد الشهري</p>
+            <p>القنوات: نستخدم رسائل CRM، ونستخدم وسائل التواصل، والفروع</p>
+            
+            <hr style="border:0; border-top:1px solid #ddd; margin: 20px 0;">
+
+            <h3>Q3 (أغسطس–أكتوبر) - أغسطس – تجهيز الدراسة</h3>
+            <p>التركيز الموسمي: مصاريف المدارس والدروس</p>
+            <p>الربط بالميزة التنافسية: إدارة السيولة وخيارات التقسيط مع العائد الشهري</p>
+            <p>القنوات: نستخدم رسائل CRM، ونستخدم وسائل التواصل، والفروع</p>
+
+            <h3>سبتمبر – ذروة الدراسة</h3>
+            <p>التركيز الموسمي: انتظام المصروفات الشهرية</p>
+            <p>الربط بالميزة التنافسية: دخل شهري ثابت يساعد على التخطيط</p>
+            <p>القنوات: نستخدم وسائل التواصل / فيديو، ونستخدم البحث، والفروع</p>
+
+            <h3>أكتوبر – استقرار السنة الدراسية</h3>
+            <p>التركيز الموسمي: إعادة بناء الرصيد</p>
+            <p>الربط بالميزة التنافسية: زيادة الرصيد تعني أمانًا ماليًا للأسرة</p>
+            <p>القنوات: نستخدم رسائل CRM، ونستخدم وسائل التواصل، والفروع</p>
+
+            <hr style="border:0; border-top:1px solid #ddd; margin: 20px 0;">
+
+            <h3>Q4 (نوفمبر–يناير) - نوفمبر – نهاية السنة المالية</h3>
+            <p>التركيز الموسمي: مراجعة الأداء المالي الشخصي</p>
+            <p>الربط بالميزة التنافسية: حصيلة استخدام الحساب والعائد الشهري</p>
+            <p>القنوات: نستخدم رسائل CRM، ونستخدم وسائل التواصل، والفروع</p>
+
+            <h3>ديسمبر – ذروة المصروفات الموسمية</h3>
+            <p>التركيز الموسمي: ضبط المصروفات بدون ضغط</p>
+            <p>الربط بالميزة التنافسية: إدارة السيولة، والنقاط، ومزايا الاستخدام</p>
+            <p>القنوات: نستخدم وسائل التواصل / فيديو، ونستخدم رسائل CRM، والفروع</p>
+
+            <h3>يناير – بداية سنة جديدة</h3>
+            <p>التركيز الموسمي: تخطيط مالي جديد</p>
+            <p>الربط بالميزة التنافسية: حساب يوفر دخل شهري وأمان ومزايا</p>
+            <p>القنوات: نستخدم وسائل التواصل، ونستخدم البحث، والفروع</p>
+        </div>
+
+        <!-- 32. Q1 Calendar (FULL DATA) -->
+        <div class="content-block" id="sec-32">
+            <div class="block-header">
+                <span class="block-num">32</span>
+                <h2 class="block-title">خطة المحتوى التسويقي – الربع الأول (Q1)</h2>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+<th>الشهر</th>
+<th>الحملة / المبادرة</th>
+                            <th>هدف محدد وقابل للقياس</th>
+                            <th>الفكرة الرئيسية</th>
+                            <th>شخصية العميل</th>
+<th>مرحلة الرحلة</th>
+<th>أفكار المحتوى</th>
+<th>الصيغة</th>
+<th>القناة</th>
+<th>الدعوة للإجراء</th>
+<th>ملاحظات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>فبراير</td><td>إطلاق Post Plus تعريفي</td><td>رفع الوعي بالحساب بنسبة 30%</td><td>دخل شهري وأمان ومزايا</td><td>دخل ثابت / أمان عائلي</td><td>وعي</td><td>ما هو Post Plus؟ ولماذا مختلف</td><td>فيديو تعريفي / منشور</td><td>وسائل التواصل / الفروع</td><td>اعرف أكتر</td><td>تركيز على التعريف فقط</td></tr>
+                        <tr><td>فبراير</td><td>توعية بالعائد الشهري</td><td>استقبال 500 استفسار في الفروع</td><td>عائد شهري بدون ربط فلوس</td><td>دخل ثابت</td><td>تفكير</td><td>إزاي تستفيد من العائد الشهري</td><td>فيديو قصير / أسئلة وأجوبة</td><td>وسائل التواصل</td><td>اسأل الآن</td><td>ربط بالسيولة</td></tr>
+                        <tr><td>مارس</td><td>إبراز التأمين مع AXA</td><td>فتح 200 حساب</td><td>أمان لعيلتك ضمن حسابك</td><td>أمان عائلي</td><td>تفكير</td><td>التأمين جزء من الحساب</td><td>إنفوجراف / فيديو</td><td>وسائل التواصل / الفروع</td><td>شوف التفاصيل</td><td>تبسيط غير تقني</td></tr>
+                        <tr><td>مارس</td><td>تفعيل قرار الفتح</td><td>فتح 150 حساب</td><td>افتح حسابك بسهولة</td><td>أمان عائلي</td><td>قرار</td><td>خطوات فتح الحساب</td><td>فيديو خطوات</td><td>وسائل التواصل / الفروع</td><td>افتح حساب</td><td>دعم موظفي الفروع</td></tr>
+                        <tr><td>أبريل</td><td>مزايا نمط الحياة</td><td>زيادة استخدام المزايا بنسبة 20٪</td><td>كل استخدام لحسابك يرجع عليك بفائدة</td><td>الناس اللي بتدير فلوسها بحكمة</td><td>تفكير</td><td>تطبيق Entertainer مع نقاط WIN</td><td>فيديو قصير / تجربة مستخدم</td><td>وسائل التواصل</td><td>جرّب المزايا</td><td>إبراز الاستخدام</td></tr>
+                        <tr><td>أبريل</td><td>تحفيز الاستخدام</td><td>زيادة التفاعل بنسبة 25٪</td><td>استفيد كل شهر</td><td>الناس اللي بتدير فلوسها بحكمة</td><td>ولاء</td><td>قصص استخدام حقيقية</td><td>قصص / منشور</td><td>وسائل التواصل / رسائل CRM</td><td>شارك تجربتك</td><td>توليد محتوى مستخدمين</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 33. Q2 Calendar (FULL DATA) -->
+        <div class="content-block" id="sec-33">
+            <div class="block-header">
+                <span class="block-num">33</span>
+                <h2 class="block-title">خطة المحتوى التسويقي – الربع الثاني (Q2)</h2>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+<th>الشهر</th>
+<th>الحملة / المبادرة</th>
+<th>الفكرة الرئيسية</th>
+                            <th>شخصية العميل</th>
+<th>مرحلة الرحلة</th>
+<th>أفكار المحتوى</th>
+<th>الصيغة</th>
+<th>القناة</th>
+<th>الدعوة للإجراء</th>
+<th>ملاحظات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>مايو</td><td>حملة تعظيم القيمة</td><td>كل ما تزود رصيدك تكسب أكتر</td><td>دخل ثابت</td><td>تفكير</td><td>إزاي تزود عائدك شهريًا</td><td>فيديو شرح / منشور</td><td>وسائل التواصل</td><td>اعرف إزاي</td><td>ربط القيمة بالرصيد</td></tr>
+                        <tr><td>مايو</td><td>تفعيل حسابات العملاء غير النشطين</td><td>شغّل حسابك واستفيد من المزايا المتاحة</td><td>دخل ثابت</td><td>قرار</td><td>رسائل تفعيل الاستخدام</td><td>رسائل نصية / رسائل CRM</td><td>رسائل CRM</td><td>فعّل حسابك</td><td>استهداف دقيق</td></tr>
+                        <tr><td>يونيو</td><td>موسم السفر</td><td>استفيد بمزاياك أثناء السفر</td><td>قيمة مضافة</td><td>تفكير</td><td>مزايا السفر والترفيه</td><td>فيديو قصير / قصص</td><td>وسائل التواصل</td><td>شوف المزايا</td><td>موسمي</td></tr>
+                        <tr><td>يونيو</td><td>إبراز الثقة بالبريد</td><td>فلوسك مع جهة موثوقة وإجراءات واضحة</td><td>أمان عائلي</td><td>وعي</td><td>ليه البريد المصري؟</td><td>فيديو قصير</td><td>وسائل التواصل</td><td>اعرف أكتر</td><td>تعزيز الثقة</td></tr>
+                        <tr><td>يوليو</td><td>عروض استخدام ذكي</td><td>استخدم مزايا الحساب بشكل أفضل</td><td>الناس اللي بتدير فلوسها بحكمة</td><td>ولاء</td><td>نصائح استخدام الحساب</td><td>شريط صور / منشور</td><td>وسائل التواصل / رسائل CRM</td><td>استخدم الآن</td><td>تثبيت السلوك</td></tr>
+                        <tr><td>يوليو</td><td>قصص نجاح عملاء</td><td>قصص نجاح عملاء Post Plus</td><td>كل الشرائح</td><td>ولاء</td><td>شهادات وتجارب</td><td>فيديو / منشور</td><td>وسائل التواصل</td><td>شوف التجارب</td><td>بناء الثقة</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 34. Q3 Calendar (FULL DATA) -->
+        <div class="content-block" id="sec-34">
+            <div class="block-header">
+                <span class="block-num">34</span>
+                <h2 class="block-title">خطة المحتوى التسويقي – الربع الثالث (Q3)</h2>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+<th>الشهر</th>
+<th>الحملة / المبادرة</th>
+<th>الفكرة الرئيسية</th>
+                            <th>شخصية العميل</th>
+<th>مرحلة الرحلة</th>
+<th>أفكار المحتوى</th>
+<th>الصيغة</th>
+<th>القناة</th>
+<th>الدعوة للإجراء</th>
+<th>ملاحظات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>أغسطس</td><td>تحسين تجربة العملاء</td><td>تجربة استخدام أسهل</td><td>كل الشرائح</td><td>تفكير</td><td>شرح استخدام الخدمات</td><td>فيديو قصير / منشور</td><td>وسائل التواصل / رسائل CRM</td><td>اعرف أكتر</td><td>تحسين فهم المنتج</td></tr>
+                        <tr><td>أغسطس</td><td>تذكير بالمزايا</td><td>استفيد من حسابك بشكل أفضل</td><td>الناس اللي بتدير فلوسها بحكمة</td><td>تفكير</td><td>شرح المزايا العملية</td><td>شريط صور / فيديو قصير</td><td>وسائل التواصل</td><td>جرّب الآن</td><td>تركيز عملي</td></tr>
+                        <tr><td>سبتمبر</td><td>دعم قرار الادخار</td><td>ادخار منظم بعائد شهري</td><td>دخل ثابت</td><td>قرار</td><td>إزاي تخطط لادخارك</td><td>فيديو شرح</td><td>وسائل التواصل / الفروع</td><td>افتح حساب</td><td>مرتبط بالموسم الدراسي</td></tr>
+                        <tr><td>سبتمبر</td><td>تثبيت الثقة</td><td>التعامل الآمن مع أموالك</td><td>أمان عائلي</td><td>وعي</td><td>سياسات الأمان بالبريد</td><td>منشور / فيديو</td><td>وسائل التواصل</td><td>اعرف أكتر</td><td>لغة مباشرة</td></tr>
+                        <tr><td>أكتوبر</td><td>مراجعة الأداء مع العملاء</td><td>نطوّر مع بعض</td><td>كل الشرائح</td><td>ولاء</td><td>استطلاعات رأي</td><td>قصص / نماذج</td><td>وسائل التواصل / رسائل CRM</td><td>شارك رأيك</td><td>تحسين مستمر</td></tr>
+                        <tr><td>أكتوبر</td><td>تحسين الرسائل</td><td>رسائل أوضح</td><td>كل الشرائح</td><td>تفكير</td><td>اختبار رسائل مختلفة</td><td>اختبار محتوى مختلف</td><td>وسائل التواصل</td><td>اعرف أكتر</td><td>تحسين الحملات</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 35. Q4 Calendar (FULL DATA) -->
+        <div class="content-block" id="sec-35">
+            <div class="block-header">
+                <span class="block-num">35</span>
+                <h2 class="block-title">خطة المحتوى التسويقي – الربع الرابع (Q4)</h2>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+<th>الشهر</th>
+<th>الحملة / المبادرة</th>
+<th>الفكرة الرئيسية</th>
+                            <th>شخصية العميل</th>
+<th>مرحلة الرحلة</th>
+<th>أفكار المحتوى</th>
+<th>الصيغة</th>
+<th>القناة</th>
+<th>الدعوة للإجراء</th>
+<th>ملاحظات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>نوفمبر</td><td>مراجعة سنوية للأداء</td><td>حصيلة استخدامك خلال السنة</td><td>كل الشرائح</td><td>ولاء</td><td>ملخص استفادتك</td><td>فيديو / منشور</td><td>وسائل التواصل / رسائل CRM</td><td>شوف حصيلتك</td><td>تثبيت الولاء</td></tr>
+                        <tr><td>نوفمبر</td><td>تحفيز زيادة الرصيد</td><td>اختتم السنة بأفضل عائد</td><td>دخل ثابت</td><td>قرار</td><td>سيناريوهات زيادة الرصيد</td><td>فيديو شرح</td><td>وسائل التواصل / الفروع</td><td>زود رصيدك</td><td>بدون عروض سعرية</td></tr>
+                        <tr><td>ديسمبر</td><td>استخدام ذكي للمصاريف</td><td>حسابك يساعدك في إدارة مصروفاتك</td><td>الناس اللي بتدير فلوسها بحكمة</td><td>تفكير</td><td>نصائح إدارة مصروفات</td><td>شريط صور / فيديو قصير</td><td>وسائل التواصل</td><td>استخدم الحساب</td><td>موسمي</td></tr>
+                        <tr><td>ديسمبر</td><td>تأكيد الأمان</td><td>أمان فلوسك في أوقات الضغط</td><td>أمان عائلي</td><td>وعي</td><td>رسائل أمان وطمأنة</td><td>منشور / فيديو</td><td>وسائل التواصل</td><td>اعرف أكتر</td><td>تهدئة المخاوف</td></tr>
+                        <tr><td>يناير</td><td>تخطيط مالي للسنة الجديدة</td><td>خطتك المالية للسنة الجديدة</td><td>كل الشرائح</td><td>وعي</td><td>إزاي تبدأ سنة جديدة بحساب Post Plus</td><td>فيديو تعليمي</td><td>وسائل التواصل / الفروع</td><td>ابدأ الآن</td><td>بداية دورة جديدة</td></tr>
+                        <tr><td>يناير</td><td>إعادة استهداف المهتمين</td><td>القرار المؤجل وقته الآن</td><td>كل الشرائح</td><td>قرار</td><td>رسائل إعادة استهداف</td><td>رسائل CRM / إعلانات</td><td>رسائل CRM / وسائل التواصل</td><td>افتح حساب</td><td>إغلاق السنة المالية</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 36. قواعد التشغيل (FULL TEXT) -->
+        <div class="content-block" id="sec-36">
+            <div class="block-header">
+                <span class="block-num">36</span>
+                <h2 class="block-title">قواعد التشغيل التسويقي</h2>
+            </div>
+            
+            <p>هذه قواعد التسويق التشغيلي لحساب Post Plus</p>
+            <p>هذه القواعد تُعتبر مرجعًا إلزاميًا لتشغيل أي نشاط تسويقي خاص بحساب Post Plus، وتهدف لضمان:</p>
+            <ul>
+                <li>كفاءة الإنفاق</li>
+                <li>وضوح القرار</li>
+                <li>تقليل الصرف الغير مدروس او المبرر في الإعلانات</li>
+            </ul>
+
+            <h3>قواعد استخدام الإعلانات المدفوعة</h3>
+            <p>لا يتم استخدام الإعلانات المدفوعة إلا في شهور مرتبطة بقرار مباشر.</p>
+            <p>تشمل:</p>
+            <ul>
+                <li>الربع الثاني (الاستحواذ المعتمد على المزايا)</li>
+                <li>الربع الرابع (تعزيز القرار والتحويل)</li>
+            </ul>
+            <p>ولا تُستخدم في:</p>
+            <ul>
+                <li>شهور الوعي البحت</li>
+                <li>شهور بناء الفهم أو التفسير فقط</li>
+            </ul>
+            <p><strong>الهدف:</strong> تحويل الميزانية من إنفاق غير مؤثر إلى إنفاق مرتبط بقرار فتح حساب.</p>
+            
+            <h3>القاعدة الجغرافية للحملات</h3>
+            <p>أي حملة مدفوعة تبدأ حصريًا في أعلى 5 محافظات أداءً في حساب سوبر توفير.</p>
+            <p>ثم يتم:</p>
+            <ul>
+                <li>التوسّع تدريجيًا حسب النتائج</li>
+                <li>وليس بالتوزيع العشوائي الجغرافي</li>
+            </ul>
+            <p><strong>الهدف:</strong> الاستفادة من بيانات فعلية بدل افتراضات سوقية عامة.</p>
+            
+            <h3>قواعد اختيار المؤثرين</h3>
+            <p>يُسمح فقط بنوعين من المؤثرين:</p>
+            <ul>
+                <li>المؤثرون الماليون</li>
+                <li>صنّاع محتوى أسلوب حياة عملي (بعيد عن التريندات والاستعراض)</li>
+            </ul>
+            <p>ويُمنع:</p>
+            <ul>
+                <li>مشاهير التريندات</li>
+                <li>صناع محتوى لا يقدم قيمة تفسيرية أو تعليمية</li>
+            </ul>
+            <p><strong>الهدف:</strong> بناء ثقة، لا خلق ضجة مؤقتة.</p>
+
+            <h3>قاعدة التوسع في القنوات</h3>
+            <p>لا يتم فتح قناة جديدة إلا إذا:</p>
+            <ul>
+                <li>كانت تخدم مرحلة محددة في رحلة العميل</li>
+                <li>أو تسد فجوة تشغيلية حقيقية وليس لمجرد التواجد الشكلي.</li>
+            </ul>
+
+            <h3>قاعدة تقييم الأداء</h3>
+            <p>يتم تقييم أي نشاط تسويقي بناءً على:</p>
+            <ul>
+                <li>تأثيره على فتح الحسابات</li>
+                <li>أو زيادة متوسط الرصيد</li>
+                <li>أو تفعيل المزايا</li>
+            </ul>
+            <p>وليس بناءً على نطاق الوصول أو التفاعل فقط.</p>
+
+            <h3>قاعدة المراجعة الشهرية</h3>
+            <p>كل شهر يتم:</p>
+            <ul>
+                <li>تحليل الأسئلة والاعتراضات الفعلية من الفروع وCRM</li>
+                <li>وتحويلها مباشرة إلى محتوى</li>
+                <li>أو تعديل في الرسائل</li>
+            </ul>
+            <p><strong>الهدف:</strong> ربط التسويق للحساب بالواقع التشغيلي لا بالتخمين.</p>
+        </div>
+
+        <!-- 37. دليل التشغيل (FULL TEXT) -->
+        <div class="content-block" id="sec-37">
+            <div class="block-header">
+                <span class="block-num">37</span>
+                <h2 class="block-title">دليل التشغيل التسويقي</h2>
+            </div>
+            <!-- Removed English subtitle per user request -->
+            
+            <h3>الهدف من الدليل</h3>
+            <p>تحويل الخطة التسويقية لحساب Post Plus من إطار استراتيجي إلى نظام تشغيل عملي، يحدد المسؤوليات، وآليات القرار، والمتابعة، بدون المساس بالخطة الأصلية.</p>
+            
+            <h3>نطاق التطبيق</h3>
+            <p>تسري هذه الوثيقة على:</p>
+            <ul>
+                <li>فريق التسويق</li>
+                <li>فريق المحتوى والتصميم</li>
+                <li>إدارة الفروع المشاركة في الترويج لحساب Post Plus</li>
+            </ul>
+            <p>ولا تُستخدم كبديل للخطة التسويقية، بل كأداة تشغيل لها.</p>
+
+            <h3>هيكل التشغيل العام</h3>
+            <p>الخطة التسويقية = ماذا نفعل ولماذا</p>
+            <p>الدليل التشغيلي = من يفعل ومتى وكيف وبأي صلاحيات</p>
+            
+            <h3>نظام اتخاذ القرار</h3>
+            <ul>
+                <li>في حالة انخفاض معدل التحويل أقل من 50% من المستهدف خلال أسبوعين ← مراجعة الرسائل فورًا.</li>
+                <li>في حالة تجاوز الهدف بنسبة 120% ← السماح بالتوسع المدروس في نفس القناة.</li>
+                <li>أي تعديل في الرسالة الأساسية يجب أن يعتمد من رئيس قطاع التسويق.</li>
+            </ul>
+        </div>
+
+        <!-- 38. نظام التقارير والمتابعة -->
+        <div class="content-block" id="sec-38">
+            <div class="block-header">
+                <span class="block-num">38</span>
+                <h2 class="block-title">نظام التقارير والمتابعة</h2>
+            </div>
+            
+            <p><strong>تقرير أسبوعي</strong></p>
+            <ul>
+                <li>عدد الحسابات المفتوحة</li>
+                <li>متوسط الرصيد</li>
+                <li>استخدام المزايا</li>
+                <li>ملاحظات الفروع</li>
+            </ul>
+
+            <p><strong>تقرير شهري</strong></p>
+            <ul>
+                <li>مقارنة الأداء بالمستهدف</li>
+                <li>تحليل أسباب الزيادة أو التراجع</li>
+                <li>توصيات تشغيلية للشهر التالي</li>
+            </ul>
+
+            <h3>تنشيط الفروع</h3>
+            <ul>
+                <li>كل موسم له رسالة أساسية واحدة للفروع.</li>
+                <li>يمنع استخدام رسائل خارج الإطار المعتمد.</li>
+                <li>أي اعتراض متكرر يُرفع للتسويق لتحويله إلى محتوى.</li>
+            </ul>
+
+            <h3>إطار التجربة والتعلم</h3>
+            <ul>
+                <li>اختبار رسالتين مختلفتين كحد أقصى في نفس الفترة.</li>
+                <li>التثبيت يكون للرسالة الأعلى تحويلًا خلال 14 يوم.</li>
+                <li>لا يتم تغيير أكثر من عنصر واحد في كل تجربة.</li>
+            </ul>
+        </div>
+
+        <!-- 39. ضوابط التشغيل -->
+        <div class="content-block" id="sec-39">
+            <div class="block-header">
+                <span class="block-num">39</span>
+                <h2 class="block-title">ضوابط التشغيل العامة</h2>
+            </div>
+            <ul>
+                <li>يمنع إطلاق أي نشاط خارج الخطة بدون توثيق.</li>
+                <li>يمنع استخدام لغة خصومات أو مقارنة مباشرة.</li>
+                <li>كل نشاط يجب أن يرتبط بميزة واضحة من حساب Post Plus.</li>
+            </ul>
+
+            <h3>آلية تحديث الوثيقة</h3>
+            <ul>
+                <li>تراجع كل 6 أشهر.</li>
+                <li>أي تعديل يتم توثيقه بتاريخ وتوقيع المسؤول.</li>
+            </ul>
+            <p>هذه الوثيقة مستقلة عن الخطة التسويقية، ومكملة لها، وقابلة للفصل أو الإلحاق حسب الحاجة الإدارية.</p>
+        </div>
+
+        <!-- 40. Terms & Conditions (FULL) -->
+        <div class="content-block" id="sec-40">
+            <div class="block-header">
+                <span class="block-num">40</span>
+                <h2 class="block-title">شروط وأحكام حساب Post Plus</h2>
+            </div>
+            
+            <h3>أولًا: جدول الخصائص الرئيسية للحساب</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th>البند</th><th>البيان</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>اسم المنتج</td><td>حساب Post Plus</td></tr>
+                        <tr><td>دورية صرف العائد</td><td>شهري</td></tr>
+                        <tr><td>سعر العائد</td><td>10.5%</td></tr>
+                        <tr><td>الحد الأدنى لفتح الحساب</td><td>100,000 جنيه</td></tr>
+                        <tr><td>غرامة الانخفاض عن الحد الأدنى</td><td>10 جنيه شهريًا</td></tr>
+                        <tr><td>نوع البطاقة</td><td>بطاقة خصم مباشر ذهبية</td></tr>
+                        <tr><td>طبيعة التعامل</td><td>شخصي / مشترك</td></tr>
+                        <tr><td>تحويل المرتبات والمعاشات</td><td>متاح</td></tr>
+                        <tr><td>المصروفات الإدارية</td><td>50 جنيه ربع سنوي</td></tr>
+                        <tr><td>التغطية التأمينية</td><td>وفاة وعجز كلي نتيجة حادث بالتعاون مع AXA</td></tr>
+                        <tr><td>تكلفة التأمين السنوية</td><td>112 جنيه</td></tr>
+                        <tr><td>خدمة Entertainer</td><td>300 جنيه سنويًا</td></tr>
+                        <tr><td>برنامج نقاط WIN</td><td>متاح</td></tr>
+                        <tr><td>بطاقة تقسيط One Finance</td><td>متاحة</td></tr>
+                        <tr><td>طبيعة العميل</td><td>أفراد طبيعيين</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>ثانيًا: تمهيد</h3>
+            <p>تسري هذه الشروط والأحكام على جميع العملاء الراغبين في فتح أو إدارة حساب Post Plus لدى البريد المصري، وتهدف هذه الوثيقة إلى توضيح آلية التشغيل، والرسوم، والغرامات، والاستحقاقات المرتبطة بالحساب.</p>
+
+            <h3>ثالثًا: شروط فتح الحساب</h3>
+            <ol>
+                <li>لا يجوز فتح أو الاحتفاظ بحسابات بأسماء مجهولة أو صورية أو وهمية.</li>
+                <li>يلتزم العميل بتقديم مستندات تحقيق الشخصية السارية واستيفاء نماذج فتح الحساب ونموذج "اعرف عميلك".</li>
+                <li>يلتزم البريد بالتحقق من هوية العميل والغرض من فتح الحساب وطبيعة التعامل عليه.</li>
+                <li>في حالة فتح الحساب بموجب توكيل، يقتصر التعامل ابتداءً على الإيداع فقط لحين حضور صاحب الحساب واستكمال الإجراءات.</li>
+            </ol>
+
+            <h3>رابعًا: إدارة الحساب والتعامل عليه</h3>
+            <ol>
+                <li>يجوز فتح الحساب بصفة شخصية أو مشتركة وفق اختيار العميل.</li>
+                <li>في الحسابات المشتركة يكون الأصل أن يكون الصرف بتوقيع منفرد لكل طرف، ما لم يتم الاتفاق على غير ذلك.</li>
+                <li>يلتزم العميل بإخطار البريد بأي تغيير يطرأ على بياناته خلال مدة لا تتجاوز 30 يومًا من تاريخ التغيير.</li>
+            </ol>
+
+            <h3>خامسًا: الحد الأدنى للأرصدة والغرامات</h3>
+            <ol>
+                <li>يلتزم العميل بالمحافظة على الحد الأدنى للرصيد المحدد للحساب.</li>
+                <li>في حالة انخفاض الرصيد عن الحد الأدنى يتم تطبيق الغرامة الشهرية المقررة تلقائيًا.</li>
+                <li>استمرار الانخفاض لفترات متتالية لا يمنع احتساب الغرامات المستحقة بصفة دورية.</li>
+            </ol>
+
+            <h3>سادسًا: العائد والاستحقاق</h3>
+            <ol>
+                <li>يحتسب العائد على الحساب بصفة شهرية وفقًا لما هو معلن.</li>
+                <li>يُحتسب العائد وفق القواعد المعتمدة، ويُرجى الرجوع لجدول الاستحقاق عند انخفاض الرصيد عن الحد الأدنى.</li>
+                <li>يتم إضافة العائد إلى الحساب تلقائيًا في مواعيد الاستحقاق.</li>
+            </ol>
+
+            <h3>سابعًا: الرسوم والمصروفات</h3>
+            <ol>
+                <li>تُستحق المصروفات الإدارية وفقًا لما هو موضح بجدول الخصائص.</li>
+                <li>يتم خصم الرسوم تلقائيًا من الحساب في مواعيد استحقاقها.</li>
+                <li>يتحمل العميل أي مصروفات إضافية ناتجة عن خدمات اختيارية.</li>
+            </ol>
+
+            <h3>ثامنًا: البطاقات والخدمات المرتبطة</h3>
+            <ol>
+                <li>تصدر بطاقة الخصم المباشر وفق الإجراءات المعتمدة بالبريد.</li>
+                <li>يتحمل العميل مسؤولية المحافظة على البطاقة والرقم السري.</li>
+                <li>جميع العمليات التي تتم باستخدام البطاقة تعتبر صادرة من العميل ما لم يثبت غير ذلك وفق الإجراءات المعتمدة.</li>
+            </ol>
+
+            <h3>تاسعًا: التأمين المرتبط بالحساب</h3>
+            <ol>
+                <li>يتم توفير التغطية التأمينية كخدمة مرتبطة بالحساب من خلال البريد المصري.</li>
+                <li>يتم تقديم طلبات المتابعة والمطالبات من خلال البريد وفق الإجراءات المعتمدة.</li>
+                <li>لا تنشأ علاقة تعاقدية مباشرة بين العميل وشركة التأمين.</li>
+                <li>يتحمل العميل مسؤولية تقديم المستندات المطلوبة في حالات المطالبات كاملة وصحيحة.</li>
+            </ol>
+
+            <h3>عاشرًا: التوكيلات والتعامل بالنيابة عن صاحب الحساب</h3>
+            <ol>
+                <li>لا يُسمح بالتعامل على الحساب بموجب توكيل إلا وفق النماذج المعتمدة.</li>
+                <li>يلتزم البريد بعدم تجاوز حدود التفويض الواردة بالتوكيل.</li>
+                <li>التوكيل البريدي مدته سنتان ويُلغى بانقضائها ما لم يتم تجديده.</li>
+            </ol>
+
+            <h3>حادي عشر: تعليق أو إيقاف الحساب</h3>
+            <p>يجوز للبريد تعليق أو إيقاف التعامل على الحساب مؤقتًا في حالات عدم استيفاء البيانات أو مخالفة الشروط أو صدور تعليمات تنظيمية بذلك.</p>
+
+            <h3>ثاني عشر: تعديل الشروط</h3>
+            <p>قد يتم تحديث الشروط وفق متطلبات التشغيل أو القرارات التنظيمية، مع إخطار العملاء بالوسائل المتاحة.</p>
+
+            <h3>ثالث عشر: التزامات العميل</h3>
+            <p>يلتزم العميل بصحة البيانات المقدمة، واستخدام الحساب في الأغراض المشروعة فقط، والمحافظة على وسائل التعامل.</p>
+
+            <h3>رابع عشر: أحكام عامة</h3>
+            <ol>
+                <li>لا يجوز التنازل عن الحساب أو تحويله للغير.</li>
+                <li>تُعد التعليمات التشغيلية الصادرة عن البريد مكملة لهذه الشروط.</li>
+                <li>يُعمل بهذه الشروط اعتبارًا من تاريخ اعتمادها ونشرها.</li>
+            </ol>
+        </div>
+
+        <!-- 41. FAQ (FULL) -->
+        <div class="content-block" id="sec-41">
+            <div class="block-header">
+                <span class="block-num">41</span>
+                <h2 class="block-title">الأسئلة الشائعة (FAQ)</h2>
+            </div>
+
+            <h3 style="color:var(--ep-green);">الاسئلة الشائعة FAQ خاصة بـ Post Plus</h3>
+
+            <p><strong>إيه هو حساب Post Plus؟</strong><br>هو حساب توفير بعائد شهري، مخصص للأفراد الطبيعيين، وبيوفر مزايا إضافية مرتبطة بالحساب.</p>
+
+            <p><strong>مين يقدر يفتح حساب Post Plus؟</strong><br>أي شخص طبيعي يقدر يفتح الحساب، سواء مصري أو أجنبي، طالما مستوفي الشروط والمستندات المطلوبة.</p>
+
+            <p><strong>الحد الأدنى لفتح الحساب كام؟</strong><br>100,000 جنيه.</p>
+
+            <p><strong>لو الرصيد قل عن الحد الأدنى يحصل إيه؟</strong><br>بيتم خصم غرامة 10 جنيه شهريًا طول ما الرصيد أقل من الحد الأدنى.</p>
+
+            <h3 style="color:var(--ep-green);">العائد والفائدة</h3>
+            <p><strong>العائد بيصرف كل قد إيه؟</strong><br>العائد بيصرف شهريًا.</p>
+            <p><strong>سعر الفائدة ثابت؟</strong><br>سعر الفائدة مرتبط بسعر الكوريدور المعلن وقتها، وبيتم تحديثه حسب تعليمات البنك المركزي.</p>
+
+            <h3 style="color:var(--ep-green);">الرسوم والمصاريف</h3>
+            <p><strong>في مصروفات إدارية على الحساب؟</strong><br>أيوه، 50 جنيه كل 3 شهور.</p>
+
+            <h3 style="color:var(--ep-green);">البطاقة والخدمات البنكية</h3>
+            <p><strong>هل بيطلع كارت على الحساب؟</strong><br>أيوه، بيتم إصدار بطاقة خصم مباشر ذهبية مرتبطة بالحساب.</p>
+            <p><strong>أقدر أستخدم الكارت في السحب والدفع؟</strong><br>أيوه، الكارت بيستخدم في السحب من ماكينات الصراف الآلي والدفع الإلكتروني حسب المتاح.</p>
+            <p><strong>أقدر أحول مرتبي أو معاشي على الحساب؟</strong><br>أيوه، الحساب يسمح بتحويل المرتبات والمعاشات عليه.</p>
+
+            <h3 style="color:var(--ep-green);">التعامل على الحساب</h3>
+            <p><strong>الحساب ممكن يكون باسم شخص واحد ولا مشترك؟</strong><br>ينفع يكون باسم شخص واحد أو حساب مشترك بين أكتر من شخص.</p>
+            <p><strong>لو الحساب مشترك، مين يحق له السحب؟</strong><br>حسب الاتفاق المكتوب وقت فتح الحساب، وغالبًا التوقيع بيكون منفرد ما لم يُنص على غير كده.</p>
+
+            <h3 style="color:var(--ep-green);">التأمين المرتبط بالحساب (AXA)</h3>
+            <p><strong>هل في تأمين مرتبط بالحساب؟</strong><br>أيوه، في تغطية في حالة الوفاة أو العجز نتيجة حادث، بالتعاون مع شركة AXA.</p>
+            <p><strong>تكلفة التأمين كام؟</strong><br>112 جنيه سنويًا.</p>
+            <p><strong>التأمين بيغطي إيه بالظبط؟</strong><br>بيغطي حالات الوفاة أو العجز الناتج عن حادث، طبقًا لشروط الوثيقة.</p>
+            <p><strong>أعمل إيه لو حصل حادث؟</strong><br>بتتقدم المستندات الطبية المعتمدة لمكتب البريد، ويتم إرسالها للإدارة المختصة لمتابعة المطالبة مع شركة التأمين.</p>
+
+            <h3 style="color:var(--ep-green);">خدمات إضافية مرتبطة بالحساب</h3>
+            <p><strong>إيه هو تطبيق Entertainer؟</strong><br>هو تطبيق بيقدم خصومات ومزايا في أماكن مختلفة، واشتراكه مرتبط بالحساب.</p>
+            <p><strong>تكلفة تطبيق Entertainer كام؟</strong><br>300 جنيه سنويًا.</p>
+            <p><strong>في برنامج نقاط؟</strong><br>أيوه، الحساب مشترك في برنامج نقاط المكافآت WIN.</p>
+            <p><strong>في بطاقة تقسيط مرتبطة بالحساب؟</strong><br>أيوه، ممكن إصدار بطاقة تقسيط One Finance حسب الشروط المقررة.</p>
+
+            <h3 style="color:var(--ep-green);">فتح الحساب والمستندات</h3>
+            <p><strong>أفتح الحساب فين؟</strong><br>من خلال أي مكتب بريد يقدم الخدمة.</p>
+            <p><strong>المستندات المطلوبة إيه؟</strong><br>- صورة بطاقة رقم قومي سارية أو جواز سفر للأجانب<br>- إيصال مرافق حديث في حالة اختلاف العنوان<br>- استيفاء نماذج فتح الحساب والتوقيع عليها</p>
+            <p><strong>هل لازم أحضر بنفسي؟</strong><br>أيوه، لازم حضور صاحب الحساب بنفسه وقت الفتح.</p>
+
+            <h3 style="color:var(--ep-green);">التوكيل والتعامل عن طريق الغير</h3>
+            <p><strong>أقدر أعمل توكيل لحد يتعامل على الحساب؟</strong><br>أيوه، سواء بتوكيل بريدي أو توكيل رسمي عام، طبقًا للإجراءات المعتمدة.</p>
+            <p><strong>التوكيل البريدي مدته قد إيه؟</strong><br>سنتين، ويُلغى تلقائيًا لو ما تجددش.</p>
+
+            <h3 style="color:var(--ep-green);">أسئلة تنظيمية</h3>
+            <p><strong>هل ينفع أفتح الحساب باسم مجهول أو صوري؟</strong><br>لا، ممنوع فتح أو الاحتفاظ بحسابات بأسماء مجهولة أو صورية.</p>
+            <p><strong>هل في تحديث بيانات دوري؟</strong><br>أيوه، لازم تحديث البيانات بشكل دوري، وخاصة في حالة وجود توكيل أو تغيير في بيانات العميل.</p>
+        </div>
+
+    </main>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+        // Progress Bar
+        gsap.to(".progress-bar", {
+            width: "100%",
+            scrollTrigger: {
+                trigger: "body",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: true
+            }
+        });
+
+        // Highlight Active Nav Link
+        const sections = document.querySelectorAll('.content-block');
+        const navLi = document.querySelectorAll('.nav-links li a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 150) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLi.forEach(a => {
+                a.classList.remove('active');
+                if (a.getAttribute('href').includes(current)) {
+                    a.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth Scroll
+        navLi.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(link.getAttribute('href'));
+                gsap.to(window, {duration: 1, scrollTo: {y: target, offsetY: 20}});
+            });
+        });
+
+        // Content Reveal Animation
+        gsap.utils.toArray('.content-block').forEach(block => {
+            gsap.from(block, {
+                scrollTrigger: {
+                    trigger: block,
+                    start: "top 85%",
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power3.out"
+            });
+        });
+
+        // Animate the interactive header when the page loads
+        gsap.from(".interactive-header", {
+            opacity: 0,
+            y: -20,
+            duration: 1,
+            ease: "power3.out"
+        });
+
+        // Table Rows Animation
+        gsap.utils.toArray('tr').forEach(row => {
+            gsap.from(row, {
+                scrollTrigger: {
+                    trigger: row,
+                    start: "top 95%",
+                },
+                x: -20,
+                opacity: 0,
+                duration: 0.4
+            });
+        });
+
+        // Removed print and PDF buttons and functionality as per user request
+
+    </script>
+</body>
+</html>
